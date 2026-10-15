@@ -10,6 +10,7 @@
 #include <linux/device.h>
 #include <linux/firmware.h>
 #include <linux/debugfs.h>
+#define AW_PA_GAIN_HEADROOM    32
 #include <linux/version.h>
 #include <linux/workqueue.h>
 #include <linux/syscalls.h>
@@ -358,7 +359,12 @@ static int aw_dev_reg_fw_update(struct aw_device *aw_dev)
 		aw_dev_err(aw_dev->dev, "can't set vcalb");
 		return ret;
 	}
-
+	
+#ifdef CONFIG_AW_RAMPING_SUPPORT
+	if ((init_volume + AW_PA_GAIN_HEADROOM) < aw_dev->volume_desc.mute_volume)
+		init_volume += AW_PA_GAIN_HEADROOM;
+#endif
+	
 	aw_dev->ops.aw_get_volume(aw_dev, &init_volume);
 	aw_dev->volume_desc.init_volume = init_volume;
 
