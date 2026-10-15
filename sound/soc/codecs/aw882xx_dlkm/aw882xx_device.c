@@ -10,7 +10,7 @@
 #include <linux/device.h>
 #include <linux/firmware.h>
 #include <linux/debugfs.h>
-#define AW_PA_GAIN_HEADROOM    32
+#define AW_PA_GAIN_HEADROOM    16
 #include <linux/version.h>
 #include <linux/workqueue.h>
 #include <linux/syscalls.h>
